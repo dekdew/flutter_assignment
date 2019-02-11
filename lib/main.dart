@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import './ui/login.dart';
+import './ui/home.dart';
 
-void main() => runApp(Main());
+void main() => runApp(MyApp());
 
-class Main extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  final routes = <String, WidgetBuilder>{
+    "/": (context) => LoginPage(),
+    "/homepage": (context) => HomePage(),
+  };
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Kodeversitas',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightBlue,
       ),
+      home: LoginPage(),
+      routes: routes,
     );
   }
 }
