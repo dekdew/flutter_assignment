@@ -21,8 +21,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
-
     return new Scaffold(
       body: new Container(
           padding: new EdgeInsets.all(20.0),
@@ -41,7 +39,7 @@ class _LoginState extends State<Login> {
                       labelText: 'User Id'),
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Pleas enter some text";
+                      return "กรุณาระบุ user";
                     }
                   },
                   onSaved: (String value) {
@@ -57,7 +55,7 @@ class _LoginState extends State<Login> {
                   obscureText: true,
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Pleas enter some text";
+                      return "กรุณาระบุ password";
                     }
                   },
                   onSaved: (String value) {
@@ -65,7 +63,6 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 new Container(
-                  width: screenSize.width,
                   child: new RaisedButton(
                     child: new Text(
                       'LOGIN',
@@ -103,7 +100,20 @@ class _LoginState extends State<Login> {
                     },
                   ),
                   margin: new EdgeInsets.only(top: 20.0),
-                )
+                ),
+                new Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      new FlatButton(
+                        child: new Text('Register New Account'),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/register");
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           )),
