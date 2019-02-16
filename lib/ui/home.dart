@@ -25,7 +25,7 @@ class Home extends StatelessWidget {
                 icon: Icon(Icons.notifications),
               ),
               Tab(
-                icon: Icon(Icons.map),
+                icon: Icon(Icons.explore),
               ),
               Tab(
                 icon: Icon(Icons.person),

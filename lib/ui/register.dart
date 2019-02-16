@@ -36,11 +36,11 @@ class RegisterState extends State<Register> {
                 new TextFormField(
                   decoration: new InputDecoration(
                       icon: Icon(Icons.email),
-                      hintText: 'Pleas input your user id',
-                      labelText: 'User Id'),
+                      hintText: 'Pleas input your email',
+                      labelText: 'Email'),
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "กรุณาระบุ user";
+                      return "กรุณาระบุ email";
                     }
                   },
                   onSaved: (String value) {
