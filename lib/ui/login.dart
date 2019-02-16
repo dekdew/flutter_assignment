@@ -72,10 +72,9 @@ class _LoginState extends State<Login> {
                       _formKey.currentState.save();
                       // First validate form.
                       if (this._formKey.currentState.validate()) {
-                        // Navigator.pushReplacementNamed(context, "/home");
                         if (this._data.email == "admin" &&
                             this._data.password == "admin") {
-                          Navigator.pushNamed(context, "/home");
+                          Navigator.pushReplacementNamed(context, "/home");
                         } else {
                           showDialog(
                             context: context,
