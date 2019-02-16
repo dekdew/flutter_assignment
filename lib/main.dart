@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import './ui/login.dart';
+import './ui/register.dart';
 import './ui/home.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final routes = <String, WidgetBuilder>{
-    "/": (context) => LoginPage(),
-    "/homepage": (context) => HomePage(),
-  };
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kodeversitas',
+      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
-      home: LoginPage(),
-      routes: routes,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Login(),
+        '/register': (context) => Register(),
+        '/home': (context) => Home(),
+      },
     );
   }
 }

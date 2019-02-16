@@ -1,80 +1,112 @@
 import 'package:flutter/material.dart';
-import './home.dart';
 
-class LoginPage extends StatefulWidget {
-  static String tag = 'login-page';
-  @override
-  _LoginPageState createState() => new _LoginPageState();
+void main() => runApp(new MaterialApp(
+      title: 'Forms in Flutter',
+      home: new Login(),
+    ));
+
+class _LoginData {
+  String email = '';
+  String password = '';
 }
 
-class _LoginPageState extends State<LoginPage> {
+class Login extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  _LoginData _data = new _LoginData();
+
   @override
   Widget build(BuildContext context) {
-    final logo = Hero(
-      tag: 'hero',
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 48.0,
-        child: Image.asset('assets/logo.png'),
-      ),
-    );
+    final Size screenSize = MediaQuery.of(context).size;
 
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      decoration: InputDecoration(
-        hintText: 'Email',
-      ),
-    );
-
-    final password = TextFormField(
-      autofocus: false,
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Password',
-      ),
-    );
-
-    final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-        ),
-        onPressed: () {
-          Navigator.pushNamed((context), "/homepage");
-        },
-        padding: EdgeInsets.all(12),
-        color: Colors.lightBlueAccent,
-        child: Text('Log In', style: TextStyle(color: Colors.white)),
-      ),
-    );
-
-    final forgotLabel = FlatButton(
-      child: Text(
-        'Forgot password?',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {},
-    );
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[
-            logo,
-            SizedBox(height: 48.0),
-            email,
-            SizedBox(height: 8.0),
-            password,
-            SizedBox(height: 24.0),
-            loginButton,
-            forgotLabel
-          ],
-        ),
-      ),
+    return new Scaffold(
+      body: new Container(
+          padding: new EdgeInsets.all(20.0),
+          child: new Form(
+            key: this._formKey,
+            child: new ListView(
+              children: <Widget>[
+                Image.asset(
+                  "assets/logo.png",
+                  height: 100,
+                ),
+                new TextFormField(
+                  decoration: new InputDecoration(
+                      icon: Icon(Icons.person),
+                      hintText: 'Pleas input your user id',
+                      labelText: 'User Id'),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Pleas enter some text";
+                    }
+                  },
+                  onSaved: (String value) {
+                    this._data.email = value;
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                      icon: Icon(Icons.lock),
+                      labelText: "Password",
+                      hintText: "Pleas input your password"),
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Pleas enter some text";
+                    }
+                  },
+                  onSaved: (String value) {
+                    this._data.password = value;
+                  },
+                ),
+                new Container(
+                  width: screenSize.width,
+                  child: new RaisedButton(
+                    child: new Text(
+                      'LOGIN',
+                      style: new TextStyle(color: Colors.black),
+                    ),
+                    onPressed: () {
+                      _formKey.currentState.save();
+                      // First validate form.
+                      if (this._formKey.currentState.validate()) {
+                        // Navigator.pushReplacementNamed(context, "/home");
+                        if (this._data.email == "admin" &&
+                            this._data.password == "admin") {
+                          Navigator.pushNamed(context, "/home");
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              // return object of type Dialog
+                              return AlertDialog(
+                                title: new Text("user or password ไม่ถูกต้อง"),
+                                actions: <Widget>[
+                                  // usually buttons at the bottom of the dialog
+                                  new FlatButton(
+                                    child: new Text("Close"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      }
+                    },
+                  ),
+                  margin: new EdgeInsets.only(top: 20.0),
+                )
+              ],
+            ),
+          )),
     );
   }
 }
